@@ -68,6 +68,46 @@ lib.contentElement {
     }
 }
 
+# Event List Content Element
+tt_content.sitepackage_eventlist = FLUIDTEMPLATE
+tt_content.sitepackage_eventlist {
+    templateName = EventList
+    templateRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
+    }
+    partialRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Partials/
+    }
+    layoutRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Layouts/
+    }
+    
+    dataProcessing {
+        10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        10 {
+            table = tx_sitepackage_domain_model_event
+            orderBy = start_date ASC
+            where = start_date > UNIX_TIMESTAMP()
+            as = events
+        }
+    }
+}
+
+# Newsletter Form Content Element
+tt_content.sitepackage_newsletter = FLUIDTEMPLATE
+tt_content.sitepackage_newsletter {
+    templateName = NewsletterForm
+    templateRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
+    }
+    partialRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Partials/
+    }
+    layoutRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Layouts/
+    }
+}
+
 # SEO and meta tags
 config {
     doctype = html5
