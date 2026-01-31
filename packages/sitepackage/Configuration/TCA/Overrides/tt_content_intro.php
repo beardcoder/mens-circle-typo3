@@ -17,6 +17,26 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
         ]
     );
 
+    $GLOBALS['TCA']['tt_content']['columns']['tx_sitepackage_intro_values'] = [
+        'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_be.xlf:tabs.settings',
+        'config' => [
+            'type' => 'inline',
+            'foreign_table' => 'tx_sitepackage_domain_model_introvalue',
+            'foreign_field' => 'parent_uid',
+            'foreign_sortby' => 'sorting',
+            'maxitems' => 20,
+            'appearance' => [
+                'collapseAll' => true,
+                'expandSingle' => true,
+                'levelLinksPosition' => 'bottom',
+                'useSortable' => true,
+                'showPossibleLocalizationRecords' => true,
+                'showAllLocalizationLink' => true,
+                'showSynchronizationLink' => true,
+            ],
+        ],
+    ];
+
     $GLOBALS['TCA']['tt_content']['types']['mc_intro'] = [
         'showitem' => '
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
@@ -26,7 +46,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
                 bodytext;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:bodytext_formlabel,
                 tx_sitepackage_quote,
             --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_be.xlf:tabs.settings,
-                pi_flexform,
+                tx_sitepackage_intro_values,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:appearance,
                 --palette--;;frames,
                 --palette--;;appearanceLinks,
@@ -42,10 +62,4 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
         ',
     ];
-
-    ExtensionManagementUtility::addPiFlexFormValue(
-        '*',
-        'FILE:EXT:sitepackage/Configuration/FlexForms/mc_intro.xml',
-        'mc_intro'
-    );
 })();

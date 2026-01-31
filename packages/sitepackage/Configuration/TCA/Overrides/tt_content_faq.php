@@ -5,15 +5,36 @@ declare(strict_types=1);
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 (static function (): void {
+    // Add inline FAQ items field to tt_content
+    $GLOBALS['TCA']['tt_content']['columns']['tx_sitepackage_faq_items'] = [
+        'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tt_content.tx_sitepackage_faq_items',
+        'config' => [
+            'type' => 'inline',
+            'foreign_table' => 'tx_sitepackage_domain_model_faqitem',
+            'foreign_field' => 'parent_uid',
+            'foreign_sortby' => 'sorting',
+            'maxitems' => 20,
+            'appearance' => [
+                'collapseAll' => true,
+                'expandSingle' => true,
+                'levelLinksPosition' => 'bottom',
+                'useSortable' => true,
+                'showPossibleLocalizationRecords' => true,
+                'showAllLocalizationLink' => true,
+                'showSynchronizationLink' => true,
+            ],
+        ],
+    ];
+
     $GLOBALS['TCA']['tt_content']['types']['mc_faq'] = [
         'showitem' => '
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                 --palette--;;general,
                 header;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_formlabel,
                 subheader;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:subheader_formlabel,
-                bodytext;LLL:EXT:sitepackage/Resources/Private/Language/locallang.xlf:faq.description,
-            --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang.xlf:faq.tab,
-                pi_flexform,
+                bodytext;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tt_content.bodytext.faq,
+            --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang_db.xlf:tt_content.tab.faq_items,
+                tx_sitepackage_faq_items,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:appearance,
                 --palette--;;frames,
                 --palette--;;appearanceLinks,
@@ -38,13 +59,5 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
         ],
     ];
 
-    $GLOBALS['TCA']['tt_content']['types']['mc_faq']['previewRenderer'] = \MensCircle\Sitepackage\Preview\FaqPreviewRenderer::class;
-
     $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mc_faq'] = 'content-menu-abstract';
-
-    ExtensionManagementUtility::addPiFlexFormValue(
-        '*',
-        'FILE:EXT:sitepackage/Configuration/FlexForms/mc_faq.xml',
-        'mc_faq'
-    );
 })();

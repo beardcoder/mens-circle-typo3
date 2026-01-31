@@ -1,35 +1,29 @@
 <html
     xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-    xmlns:mc="http://typo3.org/ns/MensCircle/Sitepackage/Components/ComponentCollection"
     data-namespace-typo3-fluid="true"
 >
-<f:layout name="ContentElement" />
-
 <f:section name="Main">
-    <section class="section section--large journey-section" id="reise">
+    <section class="section section--journey" id="journey-{data.uid}">
         <div class="container">
-            <mc:molecule.sectionHeader
-                eyebrow="{record.subheader}"
-                title="{record.header}"
-                subtitle="{record.bodytext}"
-                class="journey__header fade-in"
-            />
+            <f:if condition="{data.header}">
+                <header class="section-header">
+                    <f:if condition="{data.subheader}">
+                        <p class="section-header__eyebrow">{data.subheader}</p>
+                    </f:if>
+                    <h2 class="section-header__title">{data.header}</h2>
+                    <f:if condition="{data.bodytext}">
+                        <p class="section-header__subtitle">{data.bodytext}</p>
+                    </f:if>
+                </header>
+            </f:if>
 
-            <f:if condition="{record.pi_flexform.sSteps/settings.steps}">
-                <div class="journey__steps stagger-children">
-                    <f:for each="{record.pi_flexform.sSteps/settings.steps}" as="step">
-                        <div class="journey__step">
-                            <f:if condition="{step.number}">
-                                <div class="journey__step-number">{step.number}</div>
-                            </f:if>
-
-                            <f:if condition="{step.title}">
-                                <h3 class="journey__step-title">{step.title}</h3>
-                            </f:if>
-
-                            <f:if condition="{step.description}">
-                                <p class="journey__step-text">{step.description}</p>
-                            </f:if>
+            <f:if condition="{data.tx_sitepackage_journey_steps}">
+                <div class="journey__steps">
+                    <f:for each="{data.tx_sitepackage_journey_steps}" as="step" iteration="iterator">
+                        <div class="journey-step">
+                            <div class="journey-step__number">{step.step_number -> f:if(condition: step.step_number, else: iterator.cycle)}</div>
+                            <h3 class="journey-step__title">{step.title}</h3>
+                            <p class="journey-step__description">{step.description -> f:format.nl2br()}</p>
                         </div>
                     </f:for>
                 </div>
@@ -37,3 +31,4 @@
         </div>
     </section>
 </f:section>
+</html>

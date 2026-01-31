@@ -2,9 +2,27 @@
 
 declare(strict_types=1);
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 (static function (): void {
+    $GLOBALS['TCA']['tt_content']['columns']['tx_sitepackage_value_items'] = [
+        'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang.xlf:values.tab',
+        'config' => [
+            'type' => 'inline',
+            'foreign_table' => 'tx_sitepackage_domain_model_valueitem',
+            'foreign_field' => 'parent_uid',
+            'foreign_sortby' => 'sorting',
+            'maxitems' => 20,
+            'appearance' => [
+                'collapseAll' => true,
+                'expandSingle' => true,
+                'levelLinksPosition' => 'bottom',
+                'useSortable' => true,
+                'showPossibleLocalizationRecords' => true,
+                'showAllLocalizationLink' => true,
+                'showSynchronizationLink' => true,
+            ],
+        ],
+    ];
+
     $GLOBALS['TCA']['tt_content']['types']['mc_values'] = [
         'showitem' => '
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
@@ -12,7 +30,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
                 header;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_formlabel,
                 subheader;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:subheader_formlabel,
             --div--;LLL:EXT:sitepackage/Resources/Private/Language/locallang.xlf:values.tab,
-                pi_flexform,
+                tx_sitepackage_value_items,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:appearance,
                 --palette--;;frames,
                 --palette--;;appearanceLinks,
@@ -32,10 +50,4 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
     $GLOBALS['TCA']['tt_content']['types']['mc_values']['previewRenderer'] = \MensCircle\Sitepackage\Preview\ValuesPreviewRenderer::class;
 
     $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mc_values'] = 'content-bullets';
-
-    ExtensionManagementUtility::addPiFlexFormValue(
-        '*',
-        'FILE:EXT:sitepackage/Configuration/FlexForms/mc_values.xml',
-        'mc_values'
-    );
 })();
