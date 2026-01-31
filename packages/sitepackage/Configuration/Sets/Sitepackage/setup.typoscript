@@ -36,16 +36,84 @@ lib.contentElement {
     }
 }
 
+# Hero Section
+tt_content.mc_hero = FLUIDTEMPLATE
+tt_content.mc_hero {
+    templateName = Hero
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# Call to Action
+tt_content.mc_cta = FLUIDTEMPLATE
+tt_content.mc_cta {
+    templateName = CallToAction
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# Text Section
+tt_content.mc_text_section = FLUIDTEMPLATE
+tt_content.mc_text_section {
+    templateName = TextSection
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# Intro Section
+tt_content.mc_intro = FLUIDTEMPLATE
+tt_content.mc_intro {
+    templateName = Intro
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# Moderator Profile
+tt_content.mc_moderator = FLUIDTEMPLATE
+tt_content.mc_moderator {
+    templateName = Moderator
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# WhatsApp Community
+tt_content.mc_whatsapp = FLUIDTEMPLATE
+tt_content.mc_whatsapp {
+    templateName = WhatsappCommunity
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# FAQ Accordion
+tt_content.mc_faq = FLUIDTEMPLATE
+tt_content.mc_faq {
+    templateName = Faq
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# Journey Steps
+tt_content.mc_journey = FLUIDTEMPLATE
+tt_content.mc_journey {
+    templateName = JourneySteps
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
+# Value Items
+tt_content.mc_values = FLUIDTEMPLATE
+tt_content.mc_values {
+    templateName = ValueItems
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
+}
+
 # Event List Content Element - using TYPO3's built-in processors
 tt_content.sitepackage_eventlist = FLUIDTEMPLATE
 tt_content.sitepackage_eventlist {
     templateName = EventList
-    templateRootPaths {
-        10 = EXT:sitepackage/Resources/Private/PageView/Content/
-    }
-    layoutRootPaths {
-        10 = EXT:sitepackage/Resources/Private/PageView/Layouts/
-    }
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
     
     dataProcessing {
         # Using DatabaseQueryProcessor with proper TYPO3 v14 syntax
@@ -66,24 +134,16 @@ tt_content.sitepackage_eventlist {
 tt_content.sitepackage_newsletter = FLUIDTEMPLATE
 tt_content.sitepackage_newsletter {
     templateName = NewsletterForm
-    templateRootPaths {
-        10 = EXT:sitepackage/Resources/Private/PageView/Content/
-    }
-    layoutRootPaths {
-        10 = EXT:sitepackage/Resources/Private/PageView/Layouts/
-    }
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
 }
 
 # Testimonials List Content Element - using built-in processor
 tt_content.sitepackage_testimonials = FLUIDTEMPLATE
 tt_content.sitepackage_testimonials {
     templateName = TestimonialsList
-    templateRootPaths {
-        10 = EXT:sitepackage/Resources/Private/PageView/Content/
-    }
-    layoutRootPaths {
-        10 = EXT:sitepackage/Resources/Private/PageView/Layouts/
-    }
+    templateRootPaths < lib.contentElement.templateRootPaths
+    layoutRootPaths < lib.contentElement.layoutRootPaths
     
     dataProcessing {
         # Using database-query processor (TYPO3 v14 built-in)

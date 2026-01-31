@@ -1,0 +1,34 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:mc="http://typo3.org/ns/MensCircle/Sitepackage/Components/ComponentCollection"
+    data-namespace-typo3-fluid="true"
+>
+<f:layout name="ContentElement" />
+
+<f:section name="Main">
+    <section class="section section--large faq-section" id="faq">
+        <div class="container">
+            <div class="faq__layout">
+                <mc:molecule.sectionHeader
+                    eyebrow="{record.subheader}"
+                    title="{record.header}"
+                    subtitle="{record.bodytext}"
+                    class="faq__header fade-in"
+                />
+
+                <f:if condition="{record.pi_flexform.sItems/settings.items}">
+                    <div class="faq__list fade-in fade-in-delay-1">
+                        <f:for each="{record.pi_flexform.sItems/settings.items}" as="item">
+                            <f:if condition="{item.question} && {item.answer}">
+                                <mc:molecule.faqItem
+                                    question="{item.question}"
+                                    answer="{item.answer}"
+                                />
+                            </f:if>
+                        </f:for>
+                    </div>
+                </f:if>
+            </div>
+        </div>
+    </section>
+</f:section>

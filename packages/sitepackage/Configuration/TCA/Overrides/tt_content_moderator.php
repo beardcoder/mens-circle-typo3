@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+(static function (): void {
+    ExtensionManagementUtility::addTcaSelectItem(
+        'tt_content',
+        'CType',
+        [
+            'label' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_be.xlf:tt_content.mc_moderator',
+            'description' => 'LLL:EXT:sitepackage/Resources/Private/Language/locallang_be.xlf:tt_content.mc_moderator.description',
+            'value' => 'mc_moderator',
+            'icon' => 'content-user',
+            'group' => 'menscircle',
+        ]
+    );
+
+    $GLOBALS['TCA']['tt_content']['types']['mc_moderator'] = [
+        'showitem' => '
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                --palette--;;general,
+                subheader;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:subheader_formlabel,
+                header;LLL:EXT:sitepackage/Resources/Private/Language/locallang_be.xlf:tt_content.mc_moderator.name,
+                bodytext;LLL:EXT:sitepackage/Resources/Private/Language/locallang_be.xlf:tt_content.mc_moderator.bio,
+                header_link;LLL:EXT:sitepackage/Resources/Private/Language/locallang_be.xlf:tt_content.mc_moderator.quote,
+            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.media,
+                assets,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:appearance,
+                --palette--;;frames,
+                --palette--;;appearanceLinks,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;;hidden,
+                --palette--;;access,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:categories,
+                categories,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
+                rowDescription,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
+        ',
+    ];
+})();
