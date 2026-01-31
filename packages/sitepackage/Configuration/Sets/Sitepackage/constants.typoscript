@@ -1,0 +1,10 @@
+# Constants for Mens Circle Niederbayern
+
+# Site information
+site.name = Mens Circle Niederbayern
+site.email = info@mens-circle.de
+
+# Paths
+paths.resources = EXT:sitepackage/Resources/
+paths.templates = EXT:sitepackage/Resources/Private/Templates/
+paths.public = EXT:sitepackage/Resources/Public/

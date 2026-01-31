@@ -1,14 +1,39 @@
-RewriteEngine On
-RewriteBase /
+# Apache configuration for TYPO3 v14
 
-# Prevent access to hidden files
-RewriteCond %{REQUEST_URI} "!(^|/)\.well-known/([^./]+./?)+$" [NC]
-RewriteCond %{SCRIPT_FILENAME} -d [OR]
-RewriteCond %{SCRIPT_FILENAME} -f
-RewriteRule "(^|/)\." - [F]
+# Enable rewrite engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-# TYPO3 URL handling
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule ^(.+)$ index.php [QSA,L]
+    # Redirect to installation if TYPO3 is not yet configured
+    RewriteCond %{REQUEST_URI} !^/typo3/install\.php
+    RewriteCond %{REQUEST_URI} !^/typo3temp/
+    RewriteCond %{REQUEST_URI} !^/typo3conf/ext/
+    RewriteCond %{REQUEST_URI} !^/vendor/
+    RewriteCond %{REQUEST_URI} !^/index\.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+    
+    # Main rewrite rule - route everything through index.php
+    RewriteRule ^(.*)$ /index.php [QSA,L]
+    
+    # Redirect to remove trailing slash
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} ^(.+)/$
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# Protect system files
+<FilesMatch "\.(sql|yml|yaml|ini|log|bak)$">
+    Require all denied
+</FilesMatch>

@@ -1,0 +1,5 @@
+name: menscircle/sitepackage
+label: Mens Circle Sitepackage
+
+dependencies:
+  - typo3/fluid-styled-content

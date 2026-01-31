@@ -1,102 +1,65 @@
 {
-  "name": "menscircle/website",
-  "description": "Mens Circle Community Website - TYPO3 v14",
-  "license": "GPL-2.0-or-later",
-  "type": "project",
-  "authors": [
-    {
-      "name": "Markus Sommer",
-      "email": "markus@beardcoder.de",
-      "role": "Developer"
-    }
-  ],
-  "require": {
-    "php": "^8.5",
-    "menscircle/sitepackage": "dev-main",
-    "typo3/cms-backend": "^14.0",
-    "typo3/cms-belog": "^14.0",
-    "typo3/cms-beuser": "^14.0",
-    "typo3/cms-core": "^14.0",
-    "typo3/cms-extbase": "^14.0",
-    "typo3/cms-extensionmanager": "^14.0",
-    "typo3/cms-filelist": "^14.0",
-    "typo3/cms-fluid": "^14.0",
-    "typo3/cms-fluid-styled-content": "^14.0",
-    "typo3/cms-form": "^14.0",
-    "typo3/cms-frontend": "^14.0",
-    "typo3/cms-info": "^14.0",
-    "typo3/cms-install": "^14.0",
-    "typo3/cms-lowlevel": "^14.0",
-    "typo3/cms-rte-ckeditor": "^14.0",
-    "typo3/cms-scheduler": "^14.0",
-    "typo3/cms-seo": "^14.0",
-    "typo3/cms-setup": "^14.0",
-    "typo3/cms-tstemplate": "^14.0",
-    "praetorius/vite-asset-collector": "*",
-    "lcobucci/jwt": "*"
-  },
-  "require-dev": {
-    "a9f/typo3-fractor": "^0.5.8",
-    "armin/editorconfig-cli": "^2.2",
-    "ergebnis/composer-normalize": "^2.48",
-    "friendsofphp/php-cs-fixer": "*",
-    "phpstan/extension-installer": "*",
-    "phpstan/phpstan": "^2.1",
-    "ssch/typo3-rector": "^3.10",
-    "typo3/coding-standards": "^0.8.0"
-  },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "./packages/*/"
-    }
-  ],
-  "config": {
-    "allow-plugins": {
-      "a9f/fractor-extension-installer": true,
-      "ergebnis/composer-normalize": true,
-      "phpstan/extension-installer": true,
-      "typo3/class-alias-loader": true,
-      "typo3/cms-composer-installers": true
+    "name": "menscircle/typo3-website",
+    "description": "Mens Circle Niederbayern - TYPO3 v14.1 Community Website",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Markus Sommer",
+            "email": "markus@beardcoder.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.5",
+        "typo3/cms-core": "^14.1",
+        "typo3/cms-backend": "^14.1",
+        "typo3/cms-frontend": "^14.1",
+        "typo3/cms-extbase": "^14.1",
+        "typo3/cms-fluid": "^14.1",
+        "typo3/cms-fluid-styled-content": "^14.1",
+        "typo3/cms-install": "^14.1",
+        "typo3/cms-rte-ckeditor": "^14.1",
+        "typo3/cms-seo": "^14.1"
     },
-    "optimize-autoloader": true,
-    "platform": {
-      "php": "8.5.0"
+    "require-dev": {
+        "typo3/coding-standards": "^0.9"
     },
-    "sort-packages": true
-  },
-  "audit": {
-    "abandoned": "report"
-  },
-  "scripts": {
-    "lint": "php-cs-fixer fix --dry-run --diff",
-    "phpstan": "phpstan analyse",
-    "test": "phpunit -c packages/sitepackage/Tests/phpunit.xml",
-    "migration": [
-      "@migration:rector",
-      "@migration:fractor"
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/*"
+        }
     ],
-    "migration:rector": [
-      "Composer\\Config::disableProcessTimeout",
-      "rector process"
-    ],
-    "migration:fractor": [
-      "Composer\\Config::disableProcessTimeout",
-      "fractor process"
-    ],
-    "fix:composer": "@composer normalize",
-    "fix:editorconfig": "ec --fix",
-    "fix:php": "php-cs-fixer fix",
-    "fix": [
-      "@fix:composer",
-      "@fix:editorconfig",
-      "@fix:php"
-    ],
-    "sca": [
-      "@sca:php"
-    ],
-    "sca:php": "phpstan analyse -c phpstan.neon --memory-limit=2G $(find packages -mindepth 2 -maxdepth 2 -type d -name 'Classes' -o -name 'Configuration' -o -name 'Tests')"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "autoload": {
+        "psr-4": {
+            "MensCircle\\Sitepackage\\": "packages/sitepackage/Classes/"
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "bin-dir": "vendor/bin",
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "platform": {
+            "php": "8.5.0"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "web-dir": "public",
+            "app-dir": "."
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "TYPO3\\CMS\\Composer\\Plugin\\Core\\ScriptDispatcher::postAutoloadDump"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

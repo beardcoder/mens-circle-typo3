@@ -1,8 +1,14 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
+declare(strict_types=1);
+
+/*
+ * Extension configuration for Mens Circle Sitepackage
+ */
+
+return [
     'title' => 'Mens Circle Sitepackage',
-    'description' => 'Site configuration and templates for mens-circle.de',
+    'description' => 'Main sitepackage for Mens Circle Niederbayern website',
     'category' => 'templates',
     'author' => 'Markus Sommer',
     'author_email' => 'markus@beardcoder.de',
@@ -10,10 +16,7 @@ $EM_CONF[$_EXTKEY] = [
     'version' => '1.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '14.0.0-14.3.99',
-            'fluid_styled_content' => '14.0.0-14.99.99',
+            'typo3' => '14.1.0-14.99.99',
         ],
-        'conflicts' => [],
-        'suggests' => [],
     ],
 ];

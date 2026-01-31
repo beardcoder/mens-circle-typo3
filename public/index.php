@@ -1,33 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * TYPO3 Frontend Entry Point
  */
 
-call_user_func(static function () {
-    $classLoader = require dirname(__DIR__).'/vendor/autoload.php';
-    \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::run();
-
-    $isInstallToolDirectAccess = false;
-    if (class_exists(\TYPO3\CMS\Install\Http\Application::class)) {
-        $isInstallToolDirectAccess = isset($_GET['__typo3_install']);
-    }
-
-    $container = \TYPO3\CMS\Core\Core\Bootstrap::init($classLoader, $isInstallToolDirectAccess);
-
-    if ($container->has(\TYPO3\CMS\Core\Http\Application::class)) {
-        $container->get(\TYPO3\CMS\Core\Http\Application::class)->run();
-        return;
-    }
-
-    $container->get(\TYPO3\CMS\Install\Http\Application::class)->run();
-});
+(static function (): void {
+    $classLoader = require dirname(__DIR__) . '/vendor/autoload.php';
+    \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::run(0, \TYPO3\CMS\Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_FE);
+    \TYPO3\CMS\Core\Core\Bootstrap::init($classLoader)->get(\Psr\Http\Server\RequestHandlerInterface::class)->handle(
+        \TYPO3\CMS\Core\Http\ServerRequestFactory::fromGlobals()
+    );
+})();
