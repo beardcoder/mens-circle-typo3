@@ -1,93 +1,62 @@
-# Basic page configuration
+# Modern TYPO3 v14 page configuration using PAGEVIEW
 page = PAGE
 page {
     typeNum = 0
     
-    10 = FLUIDTEMPLATE
+    10 = PAGEVIEW
     10 {
-        templateName = Default
-        templateRootPaths {
-            10 = EXT:sitepackage/Resources/Private/Templates/Page/
+        paths {
+            100 = EXT:sitepackage/Resources/Private/PageView/
         }
-        partialRootPaths {
-            10 = EXT:sitepackage/Resources/Private/Partials/
-        }
-        layoutRootPaths {
-            10 = EXT:sitepackage/Resources/Private/Layouts/
-        }
-    }
-    
-    # Include CSS
-    includeCSS {
-        main = EXT:sitepackage/Resources/Public/Css/main.css
-    }
-    
-    # Include JavaScript
-    includeJS {
-        main = EXT:sitepackage/Resources/Public/Js/main.js
-    }
-}
-
-# Dynamic content rendering helper
-lib.dynamicContent = COA
-lib.dynamicContent {
-    10 = LOAD_REGISTER
-    10 {
-        colPos.cObject = TEXT
-        colPos.cObject {
-            field = colPos
-            ifEmpty.cObject = TEXT
-            ifEmpty.cObject {
-                value.current = 1
-                ifEmpty = 0
+        
+        dataProcessing {
+            # Built-in page-content processor (replaces lib.dynamicContent)
+            10 = page-content
+            10 {
+                as = content
+            }
+            
+            # Menu processor for navigation
+            20 = menu
+            20 {
+                as = mainMenu
+                levels = 2
             }
         }
     }
-    20 = CONTENT
-    20 {
-        table = tt_content
-        select {
-            orderBy = sorting
-            where = {#colPos}={register:colPos}
-            where.insertData = 1
-        }
-    }
-    90 = RESTORE_REGISTER
 }
 
-# Configuration for content elements
+# Configuration for content elements (inherited by FLUIDTEMPLATE content elements)
 lib.contentElement {
     templateRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
-    }
-    partialRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Partials/
+        10 = EXT:sitepackage/Resources/Private/PageView/Content/
     }
     layoutRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Layouts/
+        10 = EXT:sitepackage/Resources/Private/PageView/Layouts/
     }
 }
 
-# Event List Content Element
+# Event List Content Element - using TYPO3's built-in processors
 tt_content.sitepackage_eventlist = FLUIDTEMPLATE
 tt_content.sitepackage_eventlist {
     templateName = EventList
     templateRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
-    }
-    partialRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Partials/
+        10 = EXT:sitepackage/Resources/Private/PageView/Content/
     }
     layoutRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Layouts/
+        10 = EXT:sitepackage/Resources/Private/PageView/Layouts/
     }
     
     dataProcessing {
-        10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        # Using DatabaseQueryProcessor with proper TYPO3 v14 syntax
+        10 = database-query
         10 {
             table = tx_sitepackage_domain_model_event
             orderBy = start_date ASC
-            where = start_date > UNIX_TIMESTAMP()
+            where {
+                data = date:U
+                wrap = start_date > |
+            }
             as = events
         }
     }
@@ -98,32 +67,27 @@ tt_content.sitepackage_newsletter = FLUIDTEMPLATE
 tt_content.sitepackage_newsletter {
     templateName = NewsletterForm
     templateRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
-    }
-    partialRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Partials/
+        10 = EXT:sitepackage/Resources/Private/PageView/Content/
     }
     layoutRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Layouts/
+        10 = EXT:sitepackage/Resources/Private/PageView/Layouts/
     }
 }
 
-# Testimonials List Content Element
+# Testimonials List Content Element - using built-in processor
 tt_content.sitepackage_testimonials = FLUIDTEMPLATE
 tt_content.sitepackage_testimonials {
     templateName = TestimonialsList
     templateRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
-    }
-    partialRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Partials/
+        10 = EXT:sitepackage/Resources/Private/PageView/Content/
     }
     layoutRootPaths {
-        10 = EXT:sitepackage/Resources/Private/Layouts/
+        10 = EXT:sitepackage/Resources/Private/PageView/Layouts/
     }
     
     dataProcessing {
-        10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        # Using database-query processor (TYPO3 v14 built-in)
+        10 = database-query
         10 {
             table = tx_sitepackage_domain_model_testimonial
             where = approved = 1

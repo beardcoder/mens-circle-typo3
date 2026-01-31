@@ -11,9 +11,13 @@
 # Node
 /node_modules/
 /packages/*/node_modules/
+/package-lock.json
+/yarn.lock
+/bun.lockb
 
 # Build artifacts
 /public/assets/
+/packages/sitepackage/Resources/Public/Vite/
 *.map
 
 # IDE

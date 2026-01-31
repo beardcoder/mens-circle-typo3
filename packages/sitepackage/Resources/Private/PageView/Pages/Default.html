@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" 
+      xmlns:vite="http://typo3.org/ns/Praetorius/ViteAssetCollector/ViewHelpers"
+      lang="de">
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <header>
+        <h1>Mens Circle Niederbayern</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/veranstaltungen">Veranstaltungen</a></li>
+                <li><a href="/ueber-uns">Über uns</a></li>
+                <li><a href="/kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <f:for each="{content}" as="contentElement">
+            <f:cObject typoscriptObjectPath="tt_content.{contentElement.CType}" data="{contentElement.data}" currentValueKey="current" table="tt_content" />
+        </f:for>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mens Circle Niederbayern | <a href="/impressum">Impressum</a> | <a href="/datenschutz">Datenschutz</a></p>
+    </footer>
+</f:section>
+</html>

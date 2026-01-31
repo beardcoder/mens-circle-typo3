@@ -6,9 +6,10 @@ A clean, modern TYPO3 v14.1 website for Mens Circle Niederbayern, built with PHP
 
 This is a minimal TYPO3 installation focused on simplicity and maintainability. The project uses:
 
-- **TYPO3 v14.1 LTS** - Latest TYPO3 version
+- **TYPO3 v14.1 LTS** - Latest TYPO3 version with PAGEVIEW content object
 - **PHP 8.5** - Modern PHP with strict types
 - **Single sitepackage** - All functionality in one extension
+- **Vite Asset Collector** - Modern frontend build tool
 - **Composer-based** - Modern dependency management
 - **Semantic HTML & minimal CSS** - Performance-focused frontend
 
@@ -53,12 +54,17 @@ cd mens-circle-typo3
 ### 2. Install Dependencies
 
 ```bash
+# Install PHP dependencies
 composer install
+
+# Install frontend dependencies
+npm install
 ```
 
 This will:
-- Install TYPO3 core packages
+- Install TYPO3 core packages and Vite Asset Collector
 - Set up the sitepackage extension
+- Install Vite and build tools
 - Create necessary directories
 
 ### 3. Configure Environment
@@ -104,7 +110,19 @@ In TYPO3 Backend:
 1. Go to **Extensions** module
 2. Activate **sitepackage** extension
 
-### 7. Create Root Page
+### 7. Build Frontend Assets
+
+For development:
+```bash
+npm run dev
+```
+
+For production:
+```bash
+npm run build
+```
+
+### 8. Create Root Page
 
 1. Go to **Page** module
 2. Create a new page at root level
@@ -113,9 +131,30 @@ In TYPO3 Backend:
 
 ## Local Development
 
-### Using PHP Built-in Server
+### Using Vite Dev Server (Recommended)
+
+Start the Vite development server for hot module replacement:
 
 ```bash
+# Terminal 1: Start Vite dev server
+npm run dev
+
+# Terminal 2: Start PHP server
+cd public
+php -S localhost:8000
+```
+
+Make sure TYPO3 is in `Development` context in your `.env`:
+```env
+TYPO3_CONTEXT=Development
+```
+
+### Using PHP Built-in Server Only
+
+```bash
+# Build assets first
+npm run build
+
 cd public
 php -S localhost:8000
 ```
@@ -124,7 +163,7 @@ Access the site at: http://localhost:8000
 
 ### Using Apache/Nginx
 
-Point your web server's document root to the `public/` directory.
+Point your web server's document root to the `public/` directory and build assets with `npm run build`.
 
 ## Project Structure
 
@@ -137,26 +176,28 @@ mens-circle-typo3/
 ├── packages/                    # Extensions
 │   └── sitepackage/             # Main sitepackage extension
 │       ├── Classes/             # PHP classes
-│       │   ├── Controller/      # Extbase controllers
-│       │   ├── Domain/          # Domain models & repositories
-│       │   │   ├── Model/       # Domain models
-│       │   │   └── Repository/  # Repositories
+│       │   └── Domain/          # Domain models & repositories
+│       │       ├── Model/       # Domain models
+│       │       └── Repository/  # Repositories
 │       ├── Configuration/       # Extension configuration
 │       │   ├── Sets/            # TYPO3 v14 Sets (replaces TypoScript)
 │       │   │   └── Sitepackage/
 │       │   │       ├── config.yaml
 │       │   │       └── setup.typoscript
-│       │   └── TCA/             # Table configuration
+│       │   ├── TCA/             # Table configuration
+│       │   └── ViteEntrypoints.json  # Vite entrypoints
 │       ├── Resources/
-│       │   ├── Private/         # Fluid templates
-│       │   │   ├── Templates/
-│       │   │   │   └── Page/    # Page templates
-│       │   │   ├── Layouts/     # Fluid layouts
-│       │   │   └── Partials/    # Reusable partials
-│       │   └── Public/          # Public assets
-│       │       ├── Css/         # Stylesheets
-│       │       ├── Js/          # JavaScript
-│       │       └── Images/      # Images
+│       │   ├── Private/         # Private resources
+│       │   │   ├── Assets/      # Source CSS/JS for Vite
+│       │   │   │   ├── Styles.entry.css
+│       │   │   │   └── Main.entry.js
+│       │   │   └── PageView/    # PAGEVIEW templates
+│       │   │       ├── Pages/   # Page templates
+│       │   │       ├── Layouts/ # Fluid layouts
+│       │   │       └── Content/ # Content element templates
+│       │   └── Public/          # Public assets (Vite output)
+│       │       ├── Vite/        # Built assets (auto-generated)
+│       │       └── Icons/       # Static icons
 │       ├── composer.json        # Extension composer config
 │       └── ext_emconf.php       # Extension metadata
 ├── public/                      # Web root (document root)
@@ -164,15 +205,63 @@ mens-circle-typo3/
 │   └── typo3/                   # TYPO3 backend (symlinked)
 ├── var/                         # Cache, logs (auto-generated)
 ├── vendor/                      # Composer dependencies
+├── node_modules/                # npm dependencies (gitignored)
 ├── .env                         # Environment configuration
 ├── .env.example                 # Example environment config
-├── composer.json                # Project dependencies
+├── composer.json                # PHP dependencies
+├── package.json                 # Frontend dependencies
+├── vite.config.js               # Vite configuration
 └── README.md                    # This file
 ```
 
 ## Architecture Decisions
 
-### 1. Single Sitepackage Extension
+### 1. PAGEVIEW Content Object (TYPO3 v14)
+
+**Decision**: Use PAGEVIEW instead of FLUIDTEMPLATE for page rendering.
+
+**Rationale**:
+- Modern TYPO3 v14 approach with less configuration
+- Convention-based template resolution
+- Built-in data processors (page-content, menu)
+- Cleaner TypoScript setup
+
+**Template Structure**:
+```
+PageView/
+├── Pages/         # Page templates (Default.html)
+├── Layouts/       # Fluid layouts
+└── Content/       # Content element templates
+```
+
+### 2. Vite Asset Collector
+
+**Decision**: Use Vite with praetorius/vite-asset-collector for frontend builds.
+
+**Rationale**:
+- Modern build tool with hot module replacement
+- Fast development experience
+- ES modules support
+- TYPO3 integration via ViewHelpers
+- Production-optimized builds
+
+**Usage in Templates**:
+```html
+<vite:asset entry="EXT:sitepackage/Resources/Private/Assets/Styles.entry.css" />
+<vite:asset entry="EXT:sitepackage/Resources/Private/Assets/Main.entry.js" />
+```
+
+### 3. Built-in Data Processors
+
+**Decision**: Use TYPO3's built-in `database-query` and `page-content` processors.
+
+**Rationale**:
+- No raw SQL in TypoScript
+- Type-safe data access
+- Follows TYPO3 best practices
+- Better caching integration
+
+### 4. Single Sitepackage Extension
 
 **Decision**: All functionality lives in one `sitepackage` extension.
 
