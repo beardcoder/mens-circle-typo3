@@ -17,10 +17,22 @@ This is a minimal TYPO3 installation focused on simplicity and maintainability. 
 The website provides:
 
 - **Event Management** - Display and manage men's circle events
+  - Event list content element
+  - Event details with date, time, location
+  - Participant capacity tracking
+  - Automatic "full" status display
 - **Newsletter System** - Double opt-in email subscriptions
+  - Newsletter subscription form content element
+  - Subscriber management in backend
+  - Email validation
+  - Privacy consent checkbox
 - **Testimonials** - Community member testimonials
-- **Static Content** - About, Contact, Legal pages
-- **SEO-optimized** - Clean URLs, meta tags, structured data
+  - Testimonials list content element
+  - Backend approval workflow
+  - Author attribution
+  - Clean, quotation-style display
+- **Static Content** - Pages for About, Contact, Legal information
+- **SEO-optimized** - Clean URLs, meta tags, semantic HTML
 
 ## Requirements
 

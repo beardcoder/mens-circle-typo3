@@ -108,6 +108,31 @@ tt_content.sitepackage_newsletter {
     }
 }
 
+# Testimonials List Content Element
+tt_content.sitepackage_testimonials = FLUIDTEMPLATE
+tt_content.sitepackage_testimonials {
+    templateName = TestimonialsList
+    templateRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Templates/ContentElements/
+    }
+    partialRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Partials/
+    }
+    layoutRootPaths {
+        10 = EXT:sitepackage/Resources/Private/Layouts/
+    }
+    
+    dataProcessing {
+        10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        10 {
+            table = tx_sitepackage_domain_model_testimonial
+            where = approved = 1
+            orderBy = crdate DESC
+            as = testimonials
+        }
+    }
+}
+
 # SEO and meta tags
 config {
     doctype = html5

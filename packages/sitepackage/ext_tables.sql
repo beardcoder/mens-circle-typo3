@@ -50,3 +50,24 @@ CREATE TABLE tx_sitepackage_domain_model_subscriber (
     KEY parent (pid),
     UNIQUE KEY email (email)
 );
+
+#
+# Table structure for table 'tx_sitepackage_domain_model_testimonial'
+#
+CREATE TABLE tx_sitepackage_domain_model_testimonial (
+    uid int(11) NOT NULL auto_increment,
+    pid int(11) DEFAULT '0' NOT NULL,
+    
+    author_name varchar(255) DEFAULT '' NOT NULL,
+    content text,
+    approved tinyint(4) DEFAULT '0' NOT NULL,
+    submitted_at int(11) DEFAULT '0' NOT NULL,
+    
+    tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+    crdate int(11) unsigned DEFAULT '0' NOT NULL,
+    deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+    hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+    
+    PRIMARY KEY (uid),
+    KEY parent (pid)
+);
