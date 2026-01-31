@@ -1,4 +1,4 @@
 [
-  "../Resources/Private/Assets/Styles.entry.css",
-  "../Resources/Private/Assets/Main.entry.js"
+  "../Resources/Private/Assets/Styles/app.entry.css",
+  "../Resources/Private/Assets/Scripts/app.entry.ts"
 ]

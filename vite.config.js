@@ -7,9 +7,14 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       input: {
-        styles: 'packages/sitepackage/Resources/Private/Assets/Styles.entry.css',
-        main: 'packages/sitepackage/Resources/Private/Assets/Main.entry.js'
+        styles: 'packages/sitepackage/Resources/Private/Assets/Styles/app.entry.css',
+        main: 'packages/sitepackage/Resources/Private/Assets/Scripts/app.entry.ts'
       }
+    }
+  },
+  resolve: {
+    alias: {
+      '@': '/packages/sitepackage/Resources/Private/Assets'
     }
   }
 });
