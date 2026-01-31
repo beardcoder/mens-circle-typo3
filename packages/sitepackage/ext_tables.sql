@@ -157,3 +157,29 @@ CREATE TABLE tx_sitepackage_domain_model_introvalue (
     KEY parent (pid),
     KEY parent_uid (parent_uid)
 );
+
+#
+# Table structure for table 'tx_sitepackage_domain_model_eventregistration'
+#
+CREATE TABLE tx_sitepackage_domain_model_eventregistration (
+    uid int(11) NOT NULL auto_increment,
+    pid int(11) DEFAULT '0' NOT NULL,
+    
+    event int(11) DEFAULT '0' NOT NULL,
+    name varchar(255) DEFAULT '' NOT NULL,
+    email varchar(255) DEFAULT '' NOT NULL,
+    phone varchar(50) DEFAULT '' NOT NULL,
+    message text,
+    confirmation_token varchar(255) DEFAULT '' NOT NULL,
+    confirmed tinyint(4) DEFAULT '0' NOT NULL,
+    confirmed_at int(11) DEFAULT '0' NOT NULL,
+    
+    tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+    crdate int(11) unsigned DEFAULT '0' NOT NULL,
+    deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+    
+    PRIMARY KEY (uid),
+    KEY parent (pid),
+    KEY event (event),
+    KEY email (email)
+);

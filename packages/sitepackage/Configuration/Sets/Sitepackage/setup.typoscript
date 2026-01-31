@@ -36,6 +36,30 @@ lib.contentElement {
     }
 }
 
+# Extbase plugin configuration
+plugin.tx_sitepackage {
+    view {
+        templateRootPaths {
+            10 = EXT:sitepackage/Resources/Private/Templates/
+        }
+        layoutRootPaths {
+            10 = EXT:sitepackage/Resources/Private/Layouts/
+        }
+        partialRootPaths {
+            10 = EXT:sitepackage/Resources/Private/Partials/
+        }
+    }
+    persistence {
+        storagePid = {$plugin.tx_sitepackage.persistence.storagePid}
+    }
+}
+
+# Event Registration Plugin
+plugin.tx_sitepackage_eventregistration < plugin.tx_sitepackage
+
+# Newsletter Plugin
+plugin.tx_sitepackage_newsletter < plugin.tx_sitepackage
+
 # Hero Section
 tt_content.mc_hero = FLUIDTEMPLATE
 tt_content.mc_hero {

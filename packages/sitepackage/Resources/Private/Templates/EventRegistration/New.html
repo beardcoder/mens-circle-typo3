@@ -1,0 +1,82 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Content">
+    <div class="event-registration">
+        <div class="event-registration__header">
+            <h1 class="event-registration__title">Anmeldung: {event.title}</h1>
+            
+            <f:if condition="{event.startDate}">
+                <p class="event-registration__date">
+                    <f:format.date format="d.m.Y">{event.startDate}</f:format.date>
+                    <f:if condition="{event.location}">
+                        | {event.location}
+                    </f:if>
+                </p>
+            </f:if>
+            
+            <f:if condition="{event.description}">
+                <div class="event-registration__description">
+                    {event.description -> f:format.nl2br()}
+                </div>
+            </f:if>
+        </div>
+
+        <f:form action="create" controller="EventRegistration" method="post" 
+                arguments="{event: event}" class="registration-form">
+            
+            <f:form.hidden name="event" value="{event.uid}" />
+            
+            <div class="form-group">
+                <f:form.textfield 
+                    property="name" 
+                    id="name"
+                    class="form-control"
+                    placeholder="Dein Name*"
+                    required="required"
+                />
+            </div>
+
+            <div class="form-group">
+                <f:form.textfield 
+                    property="email" 
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Deine E-Mail*"
+                    required="required"
+                />
+            </div>
+
+            <div class="form-group">
+                <f:form.textfield 
+                    property="phone" 
+                    id="phone"
+                    class="form-control"
+                    placeholder="Telefonnummer (optional)"
+                />
+            </div>
+
+            <div class="form-group">
+                <f:form.textarea 
+                    property="message" 
+                    id="message"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Nachricht (optional)"
+                />
+            </div>
+
+            <div class="form-actions">
+                <f:form.submit class="btn btn-primary" value="Jetzt anmelden" />
+            </div>
+
+            <p class="form-note">
+                * Nach dem Absenden erhältst du eine Bestätigungs-E-Mail. 
+                Bitte klicke auf den Link in der E-Mail, um deine Anmeldung abzuschließen.
+            </p>
+        </f:form>
+    </div>
+</f:section>
+</html>

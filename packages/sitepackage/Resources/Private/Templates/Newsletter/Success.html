@@ -1,0 +1,36 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Content">
+    <div class="newsletter-success">
+        <f:switch expression="{type}">
+            <f:case value="subscribe">
+                <div class="success-icon">✓</div>
+                <h1 class="success-title">Newsletter aktiviert!</h1>
+                <p class="success-message">
+                    Vielen Dank für deine Anmeldung. Du erhältst ab sofort unseren Newsletter.
+                </p>
+            </f:case>
+            <f:case value="unsubscribe">
+                <div class="success-icon">✓</div>
+                <h1 class="success-title">Newsletter abbestellt</h1>
+                <p class="success-message">
+                    Du wurdest erfolgreich vom Newsletter abgemeldet.
+                </p>
+            </f:case>
+            <f:defaultCase>
+                <div class="success-icon">✓</div>
+                <h1 class="success-title">Erfolgreich!</h1>
+                <p class="success-message">
+                    Deine Aktion wurde erfolgreich durchgeführt.
+                </p>
+            </f:defaultCase>
+        </f:switch>
+        
+        <div class="success-actions">
+            <f:link.page pageUid="1" class="btn btn-primary">Zur Startseite</f:link.page>
+        </div>
+    </div>
+</f:section>
+</html>

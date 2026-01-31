@@ -1,0 +1,38 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Content">
+    <div class="newsletter-unsubscribe">
+        <div class="newsletter-unsubscribe__header">
+            <h1 class="newsletter-unsubscribe__title">Newsletter abbestellen</h1>
+            <p class="newsletter-unsubscribe__intro">
+                Schade, dass du gehen möchtest. Gib deine E-Mail-Adresse ein, 
+                um den Newsletter abzubestellen.
+            </p>
+        </div>
+
+        <f:form action="remove" controller="Newsletter" method="post" class="newsletter-form">
+            
+            <div class="form-group">
+                <f:form.textfield 
+                    name="email" 
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Deine E-Mail*"
+                    required="required"
+                />
+            </div>
+
+            <div class="form-actions">
+                <f:form.submit class="btn btn-secondary" value="Abmelden" />
+            </div>
+
+            <p class="form-note">
+                * Du erhältst eine Bestätigungs-E-Mail mit einem Link zum Abmelden.
+            </p>
+        </f:form>
+    </div>
+</f:section>
+</html>

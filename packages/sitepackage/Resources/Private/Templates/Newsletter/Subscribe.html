@@ -1,0 +1,49 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="Content">
+    <div class="newsletter-subscribe">
+        <div class="newsletter-subscribe__header">
+            <h1 class="newsletter-subscribe__title">Newsletter abonnieren</h1>
+            <p class="newsletter-subscribe__intro">
+                Bleibe auf dem Laufenden und erhalte regelmäßig Informationen 
+                über unsere Events und Neuigkeiten.
+            </p>
+        </div>
+
+        <f:form action="create" controller="Newsletter" method="post" class="newsletter-form">
+            
+            <div class="form-group">
+                <f:form.textfield 
+                    property="name" 
+                    id="name"
+                    class="form-control"
+                    placeholder="Dein Name*"
+                    required="required"
+                />
+            </div>
+
+            <div class="form-group">
+                <f:form.textfield 
+                    property="email" 
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Deine E-Mail*"
+                    required="required"
+                />
+            </div>
+
+            <div class="form-actions">
+                <f:form.submit class="btn btn-primary" value="Jetzt anmelden" />
+            </div>
+
+            <p class="form-note">
+                * Nach dem Absenden erhältst du eine Bestätigungs-E-Mail. 
+                Bitte klicke auf den Link in der E-Mail, um dein Abonnement zu bestätigen.
+            </p>
+        </f:form>
+    </div>
+</f:section>
+</html>

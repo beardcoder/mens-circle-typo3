@@ -8,3 +8,6 @@ site.email = info@mens-circle.de
 paths.resources = EXT:sitepackage/Resources/
 paths.templates = EXT:sitepackage/Resources/Private/Templates/
 paths.public = EXT:sitepackage/Resources/Public/
+
+# Plugin configuration
+plugin.tx_sitepackage.persistence.storagePid = 1
